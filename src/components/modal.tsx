@@ -6,6 +6,9 @@ import Modal from "@mui/material/Modal";
 interface ModalProps {
   open: boolean;
   setOpen: (openState: boolean) => void;
+  setTitle: (title: string) => void;
+  title: string;
+  addData: () => void;
 }
 
 const style = {
@@ -20,7 +23,13 @@ const style = {
   p: 4,
 };
 
-const CreateDocsModal = ({ open, setOpen }: ModalProps) => {
+const CreateDocsModal = ({
+  open,
+  setOpen,
+  title,
+  setTitle,
+  addData,
+}: ModalProps) => {
   const handleClose = () => setOpen(false);
 
   return (
@@ -32,9 +41,16 @@ const CreateDocsModal = ({ open, setOpen }: ModalProps) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <input placeholder="Add the Title" className="add-input" />
+          <input
+            onChange={(event) => setTitle(event.target.value)}
+            value={title}
+            placeholder="Add the Title"
+            className="add-input"
+          />
           <div className="button-container">
-            <button className="add-docs">Add</button>
+            <button onClick={addData} className="add-docs">
+              Add
+            </button>
           </div>
         </Box>
       </Modal>
