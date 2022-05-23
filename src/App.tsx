@@ -1,5 +1,7 @@
+import Docs from "./components/docs";
+import "./App.css";
 const App = () => {
-  return <div>App</div>;
+  return <Docs />;
 };
 
 export default App;
