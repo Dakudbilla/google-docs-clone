@@ -1,12 +1,13 @@
 import { addDoc, collection, Firestore, onSnapshot } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CreateDocsModal from "./modal";
 
-interface docsProps {
+export interface docsProps {
   database: Firestore;
 }
 
-interface firebaseDataProps {
+export interface firebaseDataProps {
   title?: string;
   id?: string;
 }
@@ -17,6 +18,8 @@ const Docs = ({ database }: docsProps) => {
   const [docsData, setDocsData] = useState<firebaseDataProps[]>();
 
   const isMounted = useRef(false);
+
+  let navigate = useNavigate();
 
   //Create collection in firebase firestore
   const collectionRef = collection(database, "docsData");
@@ -37,7 +40,6 @@ const Docs = ({ database }: docsProps) => {
         alert("Cannot add data");
       });
   };
-  let firebaseData: firebaseDataProps[];
   //Read data to firebase
   const getData = () => {
     onSnapshot(collectionRef, (data) => {
@@ -47,6 +49,10 @@ const Docs = ({ database }: docsProps) => {
         })
       );
     });
+  };
+
+  const getID = (id: string | undefined) => {
+    navigate(`/editDocs/${id}`);
   };
 
   useEffect(() => {
@@ -77,7 +83,11 @@ const Docs = ({ database }: docsProps) => {
       <div className="grid-main">
         {docsData?.map((doc) => {
           return (
-            <div className="grid-child" key={doc.title}>
+            <div
+              className="grid-child"
+              onClick={() => getID(doc.id)}
+              key={doc.title}
+            >
               <p>{doc.title}</p>
             </div>
           );
