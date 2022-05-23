@@ -1,7 +1,12 @@
+import { Firestore } from "firebase/firestore";
 import { useState } from "react";
 import CreateDocsModal from "./modal";
 
-const Docs = () => {
+interface docsProps {
+  database: Firestore;
+}
+
+const Docs = ({ database }: docsProps) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   return (
