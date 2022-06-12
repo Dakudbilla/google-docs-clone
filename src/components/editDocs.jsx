@@ -32,6 +32,7 @@ export default function EditDocs({ database }) {
           });
         })
         .catch(() => {
+//close toast in 2seconds 
           toast.error("Document failed to Saved", {
             autoClose: 2000,
           });
